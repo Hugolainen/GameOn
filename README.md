@@ -1,2 +1,6 @@
 # GameOn
-OpenClassrooms: Build a Landing Page Using Javascript
+OpenClassromms - Front-End developer path
+
+Project4: Build a Landing Page Using Javascript
+
+Link to the website : 
