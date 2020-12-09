@@ -11,24 +11,25 @@
       rel="stylesheet"
     />
   </head>
+
   <body>
     <div class="topnav" id="myTopnav">
       <div class="header-logo">
-      <img alt="logo" src="Logo.png" width="auto" height="auto" />
+        <img alt="logo" src="Logo.png" width="auto" height="auto" />
+      </div>
+
+      <div class="main-navbar">
+        <a href="#" class="active"><span>Home</span></a>
+        <a href="#"><span>Event Details</span></a>
+        <a href="#"><span>About Us</span></a>
+        <a href="#"><span>Contact</span></a>
+        <a href="#"><span>Past Events</span></a>
+        <a href="javascript:void(0);" class="icon" onclick="editNav()">
+          <i class="fa fa-bars"></i>
+        </a>
+      </div>
     </div>
-    <div class="main-navbar">
-      
-      <a href="#" class="active"><span>Home</span></a>
-      <a href="#"><span>Event Details</span></a>
-      <a href="#"><span>About Us</span></a>
-      <a href="#"><span>Contact</span></a>
-      <a href="#"><span>Past Events</span></a>
-      <a href="javascript:void(0);" class="icon" onclick="editNav()">
-        <i class="fa fa-bars"></i>
-      </a>
-    </div>
-    </div>
-  </div>
+
     <main>
       <div class="hero-section">
         <div class="hero-content">
@@ -54,7 +55,7 @@
 
       <div class="bground">
         <div class="content">
-          <span class="close"></span>
+          <span class="close closeModal-btn"></span>
           <div class="modal-body">
             <form
               name="reserve"
@@ -106,7 +107,14 @@
               <div
                 class="formData">
                 <label>How many tournaments have you attended? </label><br>
-                <input type="number" class="text-control" id="quantity" name="quantity" min="0" max="99">
+                <input 
+                  type="number" 
+                  class="text-control" 
+                  id="quantity" 
+                  name="quantity" 
+                  min="0" 
+                  max="99"
+                /><br>
               </div>
               <p class="text-label">Which location?</p>
               <div
@@ -120,8 +128,8 @@
                 />
                 <label class="checkbox-label" for="location1">
                   <span class="checkbox-icon"></span>
-                  New York</label
-                >
+                  New York
+                </label>
                 <input
                   class="checkbox-input"
                   type="radio"
@@ -131,8 +139,8 @@
                 />
                 <label class="checkbox-label" for="location2">
                   <span class="checkbox-icon"></span>
-                  San Francisco</label
-                >
+                  San Francisco
+                </label>
                 <input
                   class="checkbox-input"
                   type="radio"
@@ -142,8 +150,8 @@
                 />
                 <label class="checkbox-label" for="location3">
                   <span class="checkbox-icon"></span>
-                  Seattle</label
-                >
+                  Seattle
+                </label>
                 <input
                   class="checkbox-input"
                   type="radio"
@@ -153,8 +161,8 @@
                 />
                 <label class="checkbox-label" for="location4">
                   <span class="checkbox-icon"></span>
-                  Chicago</label
-                >
+                  Chicago
+                </label>
                 <input
                   class="checkbox-input"
                   type="radio"
@@ -164,8 +172,8 @@
                 />
                 <label class="checkbox-label" for="location5">
                   <span class="checkbox-icon"></span>
-                  Boston</label
-                >
+                  Boston
+                  </label>
                 <input
                   class="checkbox-input"
                   type="radio"
@@ -175,8 +183,8 @@
                 />
                 <label class="checkbox-label" for="location6">
                   <span class="checkbox-icon"></span>
-                  Portland</label
-                >
+                  Portland
+                </label>
               </div>
 
               <div
@@ -210,6 +218,7 @@
         </div>
       </div>
     </main>
+
     <footer>
       <p class="copyrights">
         Copyright 2014 - 2020, GameOn Inc.
