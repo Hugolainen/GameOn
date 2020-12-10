@@ -31,6 +31,8 @@ const quantity_errMessage = document.getElementById('quantity_errorMessage');
 const location_errMessage = document.getElementById('location_errorMessage');
 const checkbox1_errMessage = document.getElementById('checkbox1_errorMessage');
 
+const submitSucess_message = document.getElementById('modal-submitSucess');
+
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
@@ -46,14 +48,15 @@ closeModalBtn.forEach((btn) => btn.addEventListener("click", closeModal));
 function closeModal() {
   modalbg.style.display = "none";
 
-  // Reset error messages
+  // Reset messages
   first_errMessage.style.display = "none";  
   last_errMessage.style.display = "none";  
   email_errMessage.style.display = "none";  
   birthdate_errMessage.style.display = "none";  
   quantity_errMessage.style.display = "none";  
   location_errMessage.style.display = "none";  
-  checkbox1_errMessage.style.display = "none";   
+  checkbox1_errMessage.style.display = "none";  
+  submitSucess_message.style.display = "none"; 
 }
 
 // Specific function is confirm the patern of an email address
@@ -68,9 +71,11 @@ function validateFirst(){
   {
     first_errMessage.textContent = "Please enter 2+ characters for name field";
     first_errMessage.style.display = "block";    
+    return false;
   }
   else{
-    first_errMessage.style.display = "none";    
+    first_errMessage.style.display = "none"; 
+    return true;   
   }
 }
 
@@ -78,10 +83,12 @@ function validateLast(){
   if(formLast.value.length<2)
   {
     last_errMessage.textContent = "Please enter 2+ characters for name field";
-    last_errMessage.style.display = "block";    
+    last_errMessage.style.display = "block";  
+    return false;  
   }
   else{
-    last_errMessage.style.display = "none";    
+    last_errMessage.style.display = "none";   
+    return true; 
   }
 }
 
@@ -89,10 +96,12 @@ function validateEmail(){
   if(!confirmEmail(formEmail.value))
   {
     email_errMessage.textContent = "You must enter a valid email";
-    email_errMessage.style.display = "block";    
+    email_errMessage.style.display = "block";  
+    return false;  
   }
   else{
-    email_errMessage.style.display = "none";    
+    email_errMessage.style.display = "none"; 
+    return true;   
   }
 }
 
@@ -101,9 +110,11 @@ function validateBirthdate(){
   {
     birthdate_errMessage.textContent = "You must enter your date of birth";
     birthdate_errMessage.style.display = "block";    
+    return false;
   }
   else{
     birthdate_errMessage.style.display = "none";    
+    return true;
   }
 }
 
@@ -111,10 +122,12 @@ function validateQuantity(){
   if(formQuantity.value < 0 || formQuantity.value === "")
   {
     quantity_errMessage.textContent = "You must enter a valide value";
-    quantity_errMessage.style.display = "block";    
+    quantity_errMessage.style.display = "block";  
+    return false;  
   }
   else{
-    quantity_errMessage.style.display = "none";    
+    quantity_errMessage.style.display = "none";  
+    return true;  
   }
 }
 
@@ -132,10 +145,12 @@ function validateLocation(){
   if(!oneIsChecked)
   {
     location_errMessage.textContent = "You must choose one option";
-    location_errMessage.style.display = "block";    
+    location_errMessage.style.display = "block";  
+    return false;  
   }
   else{
-    location_errMessage.style.display = "none";    
+    location_errMessage.style.display = "none";   
+    return true; 
   }
 }
 
@@ -143,20 +158,33 @@ function validateCheckbox1(){
   if(!formCheckbox1.checked)
   {
     checkbox1_errMessage.textContent = "You must check to agree to terms and conditions";
-    checkbox1_errMessage.style.display = "block";    
+    checkbox1_errMessage.style.display = "block";  
+    return false;  
   }
   else{
     checkbox1_errMessage.style.display = "none";    
+    return true;
   }
 }
 
+
+// Submit button
+// Prevent the normal messages of the input to appear / and to reload
+// Valide every input one by one (could aslo be all together)
+// If OK, print a success message and close the modal after 3s
 formSubmitBtn.addEventListener('click', ($event) => {
   $event.preventDefault();
-  validateFirst();
-  validateLast();
-  validateEmail();
-  validateBirthdate();
-  validateQuantity();
-  validateLocation();
-  validateCheckbox1();
+
+  if(validateFirst()
+  && validateLast()
+  && validateEmail()
+  && validateBirthdate()
+  && validateQuantity()
+  && validateLocation()
+  && validateCheckbox1())
+  {
+    submitSucess_message.style.display = "block";
+    setTimeout(closeModal, 3000);
+  }
 });
+

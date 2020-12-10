@@ -208,6 +208,15 @@ input {
   font-size: 20px;
   height: 48px;
 }
+.submitSuccess{
+  font-size: 0.7em;
+  color: green;
+  display: none;
+  margin-top: 10px;
+  margin-bottom: 0px;
+  text-align: center;
+  line-height: 0.8;
+}
 .errorMessage{
   font-size: 0.6em;
   color: #e54858;
