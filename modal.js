@@ -18,7 +18,7 @@ const formLast = document.getElementById('last');
 const formEmail = document.getElementById('email');
 const formBirthdate = document.getElementById('birthdate');
 const formQuantity = document.getElementById('quantity');
-const formLocation = document.querySelectorAll('location');
+const formLocation = document.getElementsByName('location');
 const formCheckbox1 = document.getElementById('checkbox1');
 const formCheckbox2 = document.getElementById('checkbox2');
 
