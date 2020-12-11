@@ -11,14 +11,14 @@ function editNav() {
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
-const closeModalBtn = document.querySelectorAll(".closeModal-btn");
+const closeModalBtn = document.getElementById('btn-close');
 
 const formFirst = document.getElementById('first');
 const formLast = document.getElementById('last');
 const formEmail = document.getElementById('email');
 const formBirthdate = document.getElementById('birthdate');
 const formQuantity = document.getElementById('quantity');
-const formLocation = document.querySelectorAll('location');
+const formLocation = document.getElementsByName('location');
 const formCheckbox1 = document.getElementById('checkbox1');
 const formCheckbox2 = document.getElementById('checkbox2');
 
@@ -31,6 +31,13 @@ const quantity_errMessage = document.getElementById('quantity_errorMessage');
 const location_errMessage = document.getElementById('location_errorMessage');
 const checkbox1_errMessage = document.getElementById('checkbox1_errorMessage');
 
+const submitSucess_message = document.getElementById('modal-submitSucess');
+
+const form_screen = document.getElementById('formScreen');
+const success_screen = document.getElementById('successScreen');
+const closeSuccessBtn = document.getElementById('btn-success');
+const SuccessTxt = document.getElementById('successText');
+
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
@@ -39,21 +46,32 @@ function launchModal() {
   modalbg.style.display = "block";
 }
 
-// close model event
-closeModalBtn.forEach((btn) => btn.addEventListener("click", closeModal));
+// close model with "cross" or with "close button" after successful submit
+closeModalBtn.addEventListener('click', ($event) => {
+  $event.preventDefault();
+  closeModal();
+});
+
+closeSuccessBtn.addEventListener('click', ($event) => {
+  $event.preventDefault();
+  closeModal();
+});
 
 // close modal form
 function closeModal() {
   modalbg.style.display = "none";
 
-  // Reset error messages
+  // Reset messages
   first_errMessage.style.display = "none";  
   last_errMessage.style.display = "none";  
   email_errMessage.style.display = "none";  
   birthdate_errMessage.style.display = "none";  
   quantity_errMessage.style.display = "none";  
   location_errMessage.style.display = "none";  
-  checkbox1_errMessage.style.display = "none";   
+  checkbox1_errMessage.style.display = "none";  
+  submitSucess_message.style.display = "none"; 
+  form_screen.style.display = "block";
+  success_screen.style.display = "none";
 }
 
 // Specific function is confirm the patern of an email address
@@ -68,9 +86,11 @@ function validateFirst(){
   {
     first_errMessage.textContent = "Please enter 2+ characters for name field";
     first_errMessage.style.display = "block";    
+    return false;
   }
   else{
-    first_errMessage.style.display = "none";    
+    first_errMessage.style.display = "none"; 
+    return true;   
   }
 }
 
@@ -78,10 +98,12 @@ function validateLast(){
   if(formLast.value.length<2)
   {
     last_errMessage.textContent = "Please enter 2+ characters for name field";
-    last_errMessage.style.display = "block";    
+    last_errMessage.style.display = "block";  
+    return false;  
   }
   else{
-    last_errMessage.style.display = "none";    
+    last_errMessage.style.display = "none";   
+    return true; 
   }
 }
 
@@ -89,10 +111,12 @@ function validateEmail(){
   if(!confirmEmail(formEmail.value))
   {
     email_errMessage.textContent = "You must enter a valid email";
-    email_errMessage.style.display = "block";    
+    email_errMessage.style.display = "block";  
+    return false;  
   }
   else{
-    email_errMessage.style.display = "none";    
+    email_errMessage.style.display = "none"; 
+    return true;   
   }
 }
 
@@ -101,9 +125,11 @@ function validateBirthdate(){
   {
     birthdate_errMessage.textContent = "You must enter your date of birth";
     birthdate_errMessage.style.display = "block";    
+    return false;
   }
   else{
     birthdate_errMessage.style.display = "none";    
+    return true;
   }
 }
 
@@ -111,10 +137,12 @@ function validateQuantity(){
   if(formQuantity.value < 0 || formQuantity.value === "")
   {
     quantity_errMessage.textContent = "You must enter a valide value";
-    quantity_errMessage.style.display = "block";    
+    quantity_errMessage.style.display = "block";  
+    return false;  
   }
   else{
-    quantity_errMessage.style.display = "none";    
+    quantity_errMessage.style.display = "none";  
+    return true;  
   }
 }
 
@@ -132,10 +160,12 @@ function validateLocation(){
   if(!oneIsChecked)
   {
     location_errMessage.textContent = "You must choose one option";
-    location_errMessage.style.display = "block";    
+    location_errMessage.style.display = "block";  
+    return false;  
   }
   else{
-    location_errMessage.style.display = "none";    
+    location_errMessage.style.display = "none";   
+    return true; 
   }
 }
 
@@ -143,20 +173,56 @@ function validateCheckbox1(){
   if(!formCheckbox1.checked)
   {
     checkbox1_errMessage.textContent = "You must check to agree to terms and conditions";
-    checkbox1_errMessage.style.display = "block";    
+    checkbox1_errMessage.style.display = "block";  
+    return false;  
   }
   else{
     checkbox1_errMessage.style.display = "none";    
+    return true;
   }
 }
 
+
+// Submit button
+// Prevent the normal messages of the input to appear / and to reload
+// Valide every input one by one (could aslo be all together)
+// If OK, print a success message and open the success screen after 2s
 formSubmitBtn.addEventListener('click', ($event) => {
   $event.preventDefault();
-  validateFirst();
-  validateLast();
-  validateEmail();
-  validateBirthdate();
-  validateQuantity();
-  validateLocation();
-  validateCheckbox1();
+
+  if(validateFirst()
+  && validateLast()
+  && validateEmail()
+  && validateBirthdate()
+  && validateQuantity()
+  && validateLocation()
+  && validateCheckbox1())
+  {
+    submitSucess_message.style.display = "block";
+    setTimeout(showSuccessScreen, 2000);
+  }
 });
+
+// Make the success screen setup and appear
+function showSuccessScreen()
+{
+  let testHeight = form_screen.clientHeight;
+  let newHeight = testHeight.toString() +"px";
+  success_screen.style.minHeight = newHeight;
+  form_screen.style.display = "none";
+  success_screen.style.display = "flex";
+  success_screen.style.flexDirection = "column";
+  success_screen.style.justifyContent = "space-between";
+
+  formFirst.value = "";
+  formLast.value = "";
+  formEmail.value = "";
+  formBirthdate.value = "";
+  formQuantity.value = "";
+  for(let i=0; i<formLocation.length;i++)
+  {
+    formLocation[i].checked = false;
+  }
+  formCheckbox2.checked = false;
+}
+

@@ -54,9 +54,9 @@
       </div>
 
       <div class="bground">
-        <div class="content">
-          <span class="close closeModal-btn"></span>
-          <div class="modal-body">
+        <div class="content" id="modalForm">
+          <span class="close closeModal-btn" id="btn-close"></span>
+          <div class="modal-body" id="formScreen">
             <form
               name="reserve"
               action="index.html"
@@ -203,7 +203,19 @@
                 id="btn-submit"
                 class="button"
                 value="Go" />
+                <span class="submitSuccess" id="modal-submitSucess"> 
+                  Submit processing
+                </span>
             </form>
+          </div>
+          <div class="modal-success" id="successScreen">
+            <span class="success-text" id="successText"> Thank you! <br> Your reservation was received. </span>
+            <input
+            class="btn-submit"
+            type="button"
+            id="btn-success"
+            class="button"
+            value="Close" />
           </div>
         </div>
       </div>
