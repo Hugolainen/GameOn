@@ -11,7 +11,7 @@ function editNav() {
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
-const closeModalBtn = document.querySelectorAll(".closeModal-btn");
+const closeModalBtn = document.getElementById('btn-close');
 
 const formFirst = document.getElementById('first');
 const formLast = document.getElementById('last');
@@ -33,6 +33,11 @@ const checkbox1_errMessage = document.getElementById('checkbox1_errorMessage');
 
 const submitSucess_message = document.getElementById('modal-submitSucess');
 
+const form_screen = document.getElementById('formScreen');
+const success_screen = document.getElementById('successScreen');
+const closeSuccessBtn = document.getElementById('btn-success');
+const SuccessTxt = document.getElementById('successText');
+
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
@@ -41,8 +46,16 @@ function launchModal() {
   modalbg.style.display = "block";
 }
 
-// close model event
-closeModalBtn.forEach((btn) => btn.addEventListener("click", closeModal));
+// close model with "cross" or with "close button" after successful submit
+closeModalBtn.addEventListener('click', ($event) => {
+  $event.preventDefault();
+  closeModal();
+});
+
+closeSuccessBtn.addEventListener('click', ($event) => {
+  $event.preventDefault();
+  closeModal();
+});
 
 // close modal form
 function closeModal() {
@@ -57,6 +70,8 @@ function closeModal() {
   location_errMessage.style.display = "none";  
   checkbox1_errMessage.style.display = "none";  
   submitSucess_message.style.display = "none"; 
+  form_screen.style.display = "block";
+  success_screen.style.display = "none";
 }
 
 // Specific function is confirm the patern of an email address
@@ -171,7 +186,7 @@ function validateCheckbox1(){
 // Submit button
 // Prevent the normal messages of the input to appear / and to reload
 // Valide every input one by one (could aslo be all together)
-// If OK, print a success message and close the modal after 3s
+// If OK, print a success message and open the success screen after 2s
 formSubmitBtn.addEventListener('click', ($event) => {
   $event.preventDefault();
 
@@ -184,7 +199,30 @@ formSubmitBtn.addEventListener('click', ($event) => {
   && validateCheckbox1())
   {
     submitSucess_message.style.display = "block";
-    setTimeout(closeModal, 3000);
+    setTimeout(showSuccessScreen, 2000);
   }
 });
+
+// Make the success screen setup and appear
+function showSuccessScreen()
+{
+  let testHeight = form_screen.clientHeight;
+  let newHeight = testHeight.toString() +"px";
+  success_screen.style.minHeight = newHeight;
+  form_screen.style.display = "none";
+  success_screen.style.display = "flex";
+  success_screen.style.flexDirection = "column";
+  success_screen.style.justifyContent = "space-between";
+
+  formFirst.value = "";
+  formLast.value = "";
+  formEmail.value = "";
+  formBirthdate.value = "";
+  formQuantity.value = "";
+  for(let i=0; i<formLocation.length;i++)
+  {
+    formLocation[i].checked = false;
+  }
+  formCheckbox2.checked = false;
+}
 
